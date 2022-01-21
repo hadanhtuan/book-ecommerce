@@ -1,0 +1,14 @@
+.banner {
+    background-image: url("../../assets/cover.png");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vmin;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: "Vibur";
+}
