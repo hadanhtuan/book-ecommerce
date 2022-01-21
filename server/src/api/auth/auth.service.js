@@ -1,17 +1,10 @@
-var jwt = require("jsonwebtoken");
-var User = require("../../models/user");
-var bcrypt = require("bcryptjs");
-var cookie = require("cookie-parser");
+const bcrypt = require('bcrypt')
+var jwt = require('jsonwebtoken');
 
 async function register(body) {
   const email = body.email;
   const password = body.password;
   var errors = false;
-
-  if (!email || !password) {
-    errors = true;
-  }
-
   if (errors) {
     return {
       error: true,
@@ -102,14 +95,22 @@ async function login(body) {
       token: "",
     };
   }
+
+async function forgotPassword()
+{
+    
+}
+async function resetPassword()
+{
+    
 }
 
-async function forgotPassword() {}
-async function resetPassword() {}
-
 module.exports = {
-  register,
-  login,
-  forgotPassword,
-  resetPassword,
-};
+    register,
+    login,      
+    forgotPassword,
+    resetPassword
+}
+
+
+
