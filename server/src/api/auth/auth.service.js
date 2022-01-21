@@ -17,7 +17,7 @@ async function register(body) {
           email,
           password
         });
-        await bcrypt.genSalt(10, (err, salt) => {
+         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
             newUser.password = hash;
