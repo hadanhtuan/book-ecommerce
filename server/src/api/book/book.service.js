@@ -6,14 +6,13 @@ async function getAllBooks(){
         return {
             error: false,
             message: "Danh sách tất cả các quyển",
-            Books: allBooks,
+            books: allBooks,
         }
     }
-    catch{(error)=> {
-            return{
-                error: true,
-                message: 'Tải trang lỗi, vui lòng thử lại'
-            }
+    catch(err) {
+        return{
+            error: true,
+            message: 'Tải trang lỗi, vui lòng thử lại'
         }
     }
 }
@@ -24,21 +23,20 @@ async function getSingleBook(id){
         //Nếu không tìm thấy sách
         if(!singleBook){
             return {
-                error: false,
+                error: true,
                 message: 'Không tìm thấy sách'
             }
         }
         return {
             error: false,
             message: `Hiển thị sách ${singleBook.title} thành công`,
-            Book: singleBook,
+            book: singleBook,
         }
     }
-    catch{(error) => {
-            return{
-                error: true,
-                message: 'Tải trang lỗi, vui lòng thử lại.'
-            }
+    catch(err){
+        return{
+            error: true,
+            message: 'Tải trang lỗi, vui lòng thử lại.'
         }
     }
 }
