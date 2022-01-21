@@ -8,7 +8,7 @@ const checkAdminPermission = (req, res, next) => {
     if (token) {
         jwt.verify(token, "secret", async (err, decodedToken) => {
             if (err) {
-                return next(new ErrorResponse("UNAUTHORIZED", 401));
+                return next(new ErrorResponse("Không decode được token", 500));
             }
             else {
                 User.findById(decodedToken._id)

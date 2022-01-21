@@ -19,14 +19,14 @@ async function addBook(body) {
         await newBook.save();
         return {
             error: false,
-            message: "Tạo sách thành công",
+            message: "Tạo sách thành công"
         }
 
     }
     catch (err) {
         return {
             error: true,
-            message: err,
+            message: err.message,
         }
     }
 }
