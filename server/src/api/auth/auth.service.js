@@ -6,7 +6,7 @@ var cookie = require("cookie-parser");
 async function register(body) {
   const email = body.email;
   const password = body.password;
-  let errors = false;
+  var errors = false;
 
   if (!email || !password) {
     errors = true;
@@ -28,9 +28,13 @@ async function register(body) {
           token: "",
         };
       } else {
+        const resetPasswordToken = jwt.sign( email, "sup3rh4rds3cr3t");
+        const resetPasswordExpire = "";
         const newUser = new User({
           email,
           password,
+          resetPasswordToken,
+          resetPasswordExpire
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
