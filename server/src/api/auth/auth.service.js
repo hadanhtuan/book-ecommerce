@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt')
 var jwt = require('jsonwebtoken');
 
 
-
 async function register(body) {
     
 }
