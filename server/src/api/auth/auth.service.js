@@ -44,6 +44,7 @@ async function register(body) {
                 return {
                   error: false,
                   message: "Đăng ký thành công, bây giờ bạn có thể đăng nhập",
+                  token: ""
                 };
               })
               .catch((err) => {
