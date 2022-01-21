@@ -8,7 +8,7 @@ const book = require("./book");
 //routing
 router.use("/auth", auth);
 // router.use("/user", user);
-// router.use("/book", book);
+router.use("/book", book);
 
 module.exports = router;
 

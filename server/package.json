@@ -17,6 +17,5 @@
     "nodemon": "^2.0.15",
     "path": "^0.12.7"
   },
-  "devDependencies": {},
   "description": ""
 }
