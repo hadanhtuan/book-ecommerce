@@ -3,38 +3,20 @@ const bookService=require('./book.service')
 
 //[GET] api/book/all
 async function getAllBooks (req, res, next) {
-    try {
-        let allBooks=await Books.find({})
-        res.status(200).json({
-            error: false,
-            message: "A list of all books",
-            Books: allBooks,
-        })
+    let DTO=await bookService.getAllBooks();
+    if(DTO.error){
+        return next(new ErrorResponse(DTO.message, 500));
     }
-    catch(error) {
-        res.status(500).json({
-            error: true,
-            message: "Loading failed :((",
-        })
-    }
+    res.status(200).json(DTO)
 }
 
 //[GET] api/book/:id
-async function getSingleBook(req, res, next) {
-    try {
-        let singleBook=await Books.findOne({id:req.params.id})
-        res.status(200).json({
-            error: false,
-            message: `Loading book ${singleBook.title} success`,
-            Book: singleBook,
-        })
+async function getSingleBook(req, res, next){
+    let DTO=await bookService.getSingleBook(req.params.id);
+    if(DTO.error){
+        return next(new ErrorResponse(DTO.message, 500));
     }
-    catch(error) {
-        res.status(500).json({
-            error: true,
-            message: "Loading failed :((",
-        })
-    }
+    res.status(200).json(DTO)
 }
 
 module.exports = {
