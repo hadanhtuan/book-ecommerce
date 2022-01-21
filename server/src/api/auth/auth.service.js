@@ -4,26 +4,16 @@ var jwt = require('jsonwebtoken');
 async function register(body) {
   const email = body.email;
   const password = body.password;
-  var errors = false;
-  if (errors) {
-    return {
-      error: true,
-      message:
-        "Đăng ký không thành công, thông tin đăng ký không được để trống",
-      token: "",
-    };
-  } else {
     User.findOne({ email: email }).then((user) => {
       if (user) {
         return {
           error: true,
-          message: "Đăng ký không thành công, email đã được sử dụng",
-          token: "",
+          message: "Email đã được sử dụng",
         };
       } else {
         const newUser = new User({
           email,
-          password,
+          password
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -32,12 +22,11 @@ async function register(body) {
             newUser
               .save()
               .then((user) => {
-                var account = User.findOne({ email: email });
-                jwt.sign({ _id: account._id }, "sup3rh4rds3cr3t");
+                var _token = jwt.sign({ _id: user._id }, "secret");
                 return {
                   error: false,
-                  message: "Đăng ký thành công, bây giờ bạn có thể đăng nhập",
-                  token: ""
+                  message: "Đăng ký thành công!",
+                  token: _token
                 };
               })
               .catch((err) => {
@@ -45,7 +34,6 @@ async function register(body) {
                 return {
                   error: true,
                   message: "Đã xảy ra lỗi khi đăng ký",
-                  token: "",
                 };
               });
           });
@@ -53,23 +41,20 @@ async function register(body) {
       }
     });
   }
-}
-
 async function login(body) {
-  const username = body.email;
+  const email = body.email;
   const password = body.password;
   try {
-    const account = await User.findOne({ email: username });
-    if (!account) {
+    const user = await User.findOne({ email: email });
+    if (!user) {
       return {
         error: true,
-        message: "Tài khoản hoặc mật khẩu không đúng",
-        token: "",
+        message: "Tài khoản hoặc mật khẩu không đúng"
       };
     } else {
-      const passcmp = await bcrypt.compare(password, account.password);
+      const passcmp = await bcrypt.compare(password, user.password);
       if (passcmp) {
-        var _token = jwt.sign({ _id: account._id }, "sup3rh4rds3cr3t");
+        var _token = jwt.sign({ _id: user._id }, "secret");
         return {
           error: false,
           message: "Đăng nhập thành công",
@@ -78,17 +63,14 @@ async function login(body) {
       } else {
         return {
           error: true,
-          message: "Tài khoản hoặc mật khẩu không đúng",
-          token: "",
+          message: "Tài khoản hoặc mật khẩu không đúng"
         };
       }
     }
   } catch (errorr) {
-    console.log(errorr);
     return {
       error: true,
-      message: "Đăng nhập thất bại",
-      token: "",
+      message: "Đăng nhập thất bại"
     };
   }
 }
