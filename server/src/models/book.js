@@ -20,6 +20,10 @@ const bookSchema=new Schema({
     description: {
         type: String,
         require: true
+    },
+    category: {
+        type: String,
+        require: true
     }
     
 })
