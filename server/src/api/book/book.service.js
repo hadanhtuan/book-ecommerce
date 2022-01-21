@@ -5,33 +5,42 @@ async function getAllBooks(){
         let allBooks=await Books.find()
         return {
             error: false,
-            message: "A list of all books",
+            message: "Danh sách tất cả các quyển",
             Books: allBooks,
         }
     }
     catch{(error)=> {
-        return{
-            error: true,
-            message: 'Loading failed :(('
+            return{
+                error: true,
+                message: 'Tải trang lỗi, vui lòng thử lại'
+            }
         }
-    }}
+    }
 }
 
 async function getSingleBook(id){
     try{
         let singleBook=await Books.findById(id);
+        //Nếu không tìm thấy sách
+        if(!singleBook){
+            return {
+                error: false,
+                message: 'Không tìm thấy sách'
+            }
+        }
         return {
             error: false,
-            message: `Loading book ${singleBook.title} success`,
+            message: `Hiển thị sách ${singleBook.title} thành công`,
             Book: singleBook,
         }
     }
-    catch{(error)=> {
-        return{
-            error: true,
-            message: 'Loading failed :(('
+    catch{(error) => {
+            return{
+                error: true,
+                message: 'Tải trang lỗi, vui lòng thử lại.'
+            }
         }
-    }}
+    }
 }
 
 module.exports= {
