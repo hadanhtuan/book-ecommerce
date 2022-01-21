@@ -1,8 +1,8 @@
-const Books=require('../../models/book')
+const Book=require('../../models/book')
 
 async function getAllBooks(){
     try {
-        let allBooks=await Books.find()
+        let allBooks=await Book.find()
         return {
             error: false,
             message: "Danh sách tất cả các quyển",
@@ -19,7 +19,7 @@ async function getAllBooks(){
 
 async function getSingleBook(id){
     try{
-        let singleBook=await Books.findById(id);
+        let singleBook=await Book.findById(id);
         //Nếu không tìm thấy sách
         if(!singleBook){
             return {
@@ -41,8 +41,32 @@ async function getSingleBook(id){
     }
 }
 
+async function findBookByCategory(type){
+    try{
+        let listBooks=await Book.find({category:type});
+        if(!listBooks){
+            return {
+                error: true,
+                message: 'Không tìm thấy sách thuộc thể loại cần tìm'
+            }
+        }
+        return {
+            error: false,
+            message: `Danh sách sách thuộc thể loại ${listBooks.category}`,
+            books: listBooks
+        }
+    }
+    catch(err){
+        return{
+            error: true,
+            message: err.message
+        }
+    }
+}
+
 module.exports= {
     getAllBooks,
     getSingleBook,
+    findBookByCategory
 }
 

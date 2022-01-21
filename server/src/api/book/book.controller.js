@@ -1,4 +1,4 @@
-const Books=require('../../models/book')
+const Book=require('../../models/book')
 const bookService=require('./book.service') 
 const ErrorResponse = require("../../../utils/errorResponse");
 
@@ -20,7 +20,18 @@ async function getSingleBook(req, res, next){
     res.status(200).json(DTO)
 }
 
+//[GET] api/book/:category
+async function findBookByCategory(req, res, next){
+    let DTO=await bookService.findBookByCategory(req.params.category);
+    if(DTO.error){
+        return next(new ErrorResponse(DTO.message, 500));
+    }
+    res.status(200).json(DTO)
+}
+
 module.exports = {
     getAllBooks,
     getSingleBook,
+    findBookByCategory
 }
+
