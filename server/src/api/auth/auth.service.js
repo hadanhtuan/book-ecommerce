@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken');
 async function register(body) {
   const email = body.email;
   const password = body.password;
-    User.findOne({ email: email }).then((user) => {
+    await User.findOne({ email: email }).then((user) => {
       if (user) {
         return {
           error: true,
@@ -15,14 +15,14 @@ async function register(body) {
           email,
           password
         });
-        bcrypt.genSalt(10, (err, salt) => {
+        await bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
             newUser.password = hash;
             newUser
               .save()
               .then((user) => {
-                var _token = jwt.sign({ _id: user._id }, "secret");
+                var _token = await jwt.sign({ _id: user._id }, "secret");
                 return {
                   error: false,
                   message: "Đăng ký thành công!",
