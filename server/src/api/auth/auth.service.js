@@ -77,7 +77,6 @@ async function login(body) {
       const passcmp = await bcrypt.compare(password, account.password);
       if (passcmp) {
         var _token = jwt.sign({ _id: account._id }, "sup3rh4rds3cr3t");
-        res.cookie("token", _token);
         return {
           error: false,
           message: "Đăng nhập thành công",
