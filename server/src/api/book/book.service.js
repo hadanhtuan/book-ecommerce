@@ -2,7 +2,7 @@ var jwt = require("jsonwebtoken");
 var Book = require("../../models/book");
 
 async function addBook(body) {
-    const {title, coverImage, coverImageType, price, description} = body.book;
+    const {title, coverImage, coverImageType, price, description, category} = body.book;
 
     const coverImageBuffer = Buffer.from(coverImage, 'base64');
 
@@ -11,7 +11,8 @@ async function addBook(body) {
         coverImage: coverImageBuffer,
         coverImageType,
         price,
-        description
+        description,
+        category
     });
 
     try {

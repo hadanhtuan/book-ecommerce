@@ -8,7 +8,7 @@ const checkAdminPermission = (req, res, next) => {
     if (token) {
         jwt.verify(token, "secret", async (err, decodedToken) => {
             if (err) {
-                res.status(401).send({message: "Unauthorized"});
+                return next(new ErrorResponse("UNAUTHORIZED", 401));
             }
             else {
                 User.findById(decodedToken._id)
@@ -17,17 +17,17 @@ const checkAdminPermission = (req, res, next) => {
                             next();
                         }
                         else {
-                            res.status(401).send({message: "Unauthorized"});
+                            return next(new ErrorResponse("UNAUTHORIZED", 401));
                         }
                     })
                     .catch((error) => {
-                        res.status(401).send({message: "Unauthorized"});
+                        return next(new ErrorResponse("UNAUTHORIZED", 401));
                     });
             }
         });
     }
     else {
-        res.status(401).send({message: "Unauthorized"});
+        return next(new ErrorResponse("UNAUTHORIZED", 401));
     }
 }
 
