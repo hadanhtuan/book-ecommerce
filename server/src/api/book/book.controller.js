@@ -1,6 +1,16 @@
-const Book=require('../../models/book')
-const bookService=require('./book.service') 
+const bookService = require('./book.service')
 const ErrorResponse = require("../../../utils/errorResponse");
+
+//[POST] api/book/new
+async function addBook(req, res, next) {
+    let DTO = await bookService.addBook(req.body);
+    
+    if(DTO.error) 
+    {
+        return next(new ErrorResponse(DTO.message, 400));
+    }
+    res.status(200).json(DTO);
+}
 
 //[GET] api/book/all
 async function getAllBooks (req, res, next) {
@@ -21,7 +31,7 @@ async function getSingleBook(req, res, next){
 }
 
 module.exports = {
+    addBook,
     getAllBooks,
     getSingleBook
 }
-
