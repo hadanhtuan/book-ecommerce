@@ -3,7 +3,7 @@ const User = require('../models/user');
 const ErrorResponse = require("../../utils/errorResponse");
 
 const checkAdminPermission = (req, res, next) => {
-	const token = req.body.token;
+	const token = req.headers.authorization;
 
     if (token) {
         jwt.verify(token, "secret", async (err, decodedToken) => {
