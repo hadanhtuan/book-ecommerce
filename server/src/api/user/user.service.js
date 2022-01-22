@@ -4,7 +4,6 @@ var jwt = require("jsonwebtoken");
 
 async function getOrders(userId){
     try {
-        console.log(userId);
         let orders = await Orders.find({ userId });
 
         if(!orders){

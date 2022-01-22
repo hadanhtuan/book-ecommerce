@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bookController = require('./book.controller');
 
-const { checkAdminPermission } = require('../../middleware/authMiddleware');
+const { checkAdminPermission } = require('../../middlewares/authMiddleware');
   
 router.post('/new', checkAdminPermission, bookController.addBook);  
 router.get('/all', bookController.getAllBooks) //api/book/all
