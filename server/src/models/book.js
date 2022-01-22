@@ -7,7 +7,7 @@ const bookSchema=new Schema({
         required: true
     },
     coverImage: {
-        type: Buffer,
+        type: String,
         required: true
     },
     coverImageType: {
@@ -28,11 +28,7 @@ const bookSchema=new Schema({
     
 })
 
-bookSchema.virtual('coverImagePath').get(function() {  // tạo thêm thuộc tính ảo coverImagePath cho model với chức năng trả về link ảnh
-    if (this.coverImage != null) {
-        return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
-    }
-})  //bên FE chỉ việc thêm book.coverImagePath vào thuộc tính src của tag img
+
 
 const Book=mongoose.model('Book', bookSchema)
 module.exports=Book
