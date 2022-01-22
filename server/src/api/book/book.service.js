@@ -4,11 +4,11 @@ var Book = require("../../models/book");
 async function addBook(body) {
     const {title, coverImage, coverImageType, price, description, category} = body;
 
-    const coverImageBuffer = Buffer.from(coverImage, 'base64');
+    //const coverImageBuffer = Buffer.from(coverImage, 'base64');
 
     const newBook = new Book({
         title,
-        coverImage: coverImageBuffer,
+        coverImage,
         coverImageType,
         price,
         description,
