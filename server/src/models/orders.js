@@ -10,6 +10,9 @@ const ordersSchema=new Schema({
     books: {
         type: Array,   // [ { bookId, quantity} ]
         required: true
+    },
+    totalPrice: {
+        type: Number
     }
     
 })

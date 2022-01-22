@@ -25,17 +25,16 @@ const categories = [
 
 const Categories = () => {
   return (
-        <section id="sidebar" className="col-xs-12 col-md-2">
-
+        <section id="sidebar" className="col-xs-12 col-md-2 ">
             <div className="py-2 border-bottom ml-3">
                 <h6 className="font-weight-bold">Categories</h6>
                 <div id="orange"><span className="fa fa-minus"></span></div>
                 <form>
-                    <div className="form-group">  <a for="artisan">Fiction</a> </div>
-                    <div className="form-group">  <a for="breakfast">Nonfiction</a> </div>
-                    <div className="form-group">  <a for="healthy">eBooks & NOOK</a> </div>
-                    <div className="form-group">  <a for="healthy">Teens & YA</a> </div>
-                    <div className="form-group">  <a for="healthy">Kids</a> </div>
+                    <div className="form-group">  <a >Fiction</a> </div>
+                    <div className="form-group">  <a >Nonfiction</a> </div>
+                    <div className="form-group">  <a >eBooks & NOOK</a> </div>
+                    <div className="form-group">  <a >Teens & YA</a> </div>
+                    <div className="form-group">  <a >Kids</a> </div>
                 </form>
             </div>
             

@@ -89,18 +89,14 @@ const Cart = () => {
               <div className="col-4">
                 <p className="mob-text">Paperback</p>
               </div>
-              <div className="col-4">
-                <div className="row d-flex justify-content-end px-3">
-                  <p className="mb-0" id="cnt2">
-                    1
-                  </p>
-                  <div className="d-flex flex-column plus-minus">
-                    {" "}
-                    <span className="vsm-text plus">+</span>{" "}
-                    <span className="vsm-text minus">-</span>{" "}
-                  </div>
-                </div>
-              </div>
+              <div className="col-xs-6" style={{ marginLeft: '13px' }}>
+                            <div className="product_quantity"> <span>QTY: </span> <input id="quantity_input" type="text" pattern="[0-9]*" defaultValue={1} />
+                                <div className="quantity_buttons">
+                                <div id="quantity_inc_button" className="quantity_inc quantity_control"><i className="fas fa-chevron-up" /></div>
+                                <div id="quantity_dec_button" className="quantity_dec quantity_control"><i className="fas fa-chevron-down" /></div>
+                                </div>
+                            </div>
+                            </div>
               <div className="col-4">
                 <h6 className="mob-text">$13.50</h6>
               </div>
