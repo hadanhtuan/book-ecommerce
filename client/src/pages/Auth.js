@@ -3,8 +3,8 @@ import Navbar from "../components/Navbar";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import { Redirect } from "react-router-dom";
-import ForgotPassword from "../components/ForgotPassword";
-import ResetPassword from "../components/ResetPassword"
+import ForgotPassword from "../components/reset-password/ForgotPassword";
+import ResetPassword from "../components/reset-password/ResetPassword"
 
 const Auth = ({ authRoute }) => {
   const isAuthenticated = false;
