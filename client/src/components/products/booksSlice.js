@@ -1,19 +1,85 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 
-const initialState = {
-  books: [],
-  isLoading: false,
-  error: "",
-  message: "",
-  //   replyTicketError: "",
-  //   searchTicketList: [],
-  //   selectedTicket: {},
-  //   replyMsg: "",
-};
+// const initialState = {
+//   books: [
+//     {
+//       id: uuidv4(),
+//       title: "MEO MEO MEO MEO MEO",
+//       price: "300.000d",
+//       category: "aaaaaaaaaaaa",
+//       description: "Nguyen con meo",
+//       coverImage:
+//         "https://www.dtv-ebook.com/images/cover_1/chuyen-con-meo-va-con-chuot-ban-than-cua-no-luis-sepulveda.jpg",
+//     },
+//     {
+//       id: uuidv4(),
+//       title: "MEO MEO MEO MEO MEO",
+//       price: "300.000d",
+//       category: "aaaaaaaaaaaa",
+//       description: "Nguyen con meo",
+//       coverImage:
+//         "https://static.scientificamerican.com/blogs/cache/file/7B451A3D-DC88-45A1-A5FD2D07D3146A30_source.jpg?w=590&h=800&169258BA-F569-48E1-848D1CEF8B65D3B2",
+//     },
+//     {
+//       id: uuidv4(),
+//       title: "MEO MEO MEO MEO MEO",
+//       price: "300.000d",
+//       category: "aaaaaaaaaaaa",
+//       description: "Nguyen con meo",
+//       coverImage:
+//         "https://static.scientificamerican.com/blogs/cache/file/7B451A3D-DC88-45A1-A5FD2D07D3146A30_source.jpg?w=590&h=800&169258BA-F569-48E1-848D1CEF8B65D3B2",
+//     },
+//   ],
+//   isLoading: false,
+//   error: "",
+//   message: "",
+//   //   replyTicketError: "",
+//   //   searchTicketList: [],
+//   //   selectedTicket: {},
+//   //   replyMsg: "",
+// };
 
 const booksSlice = createSlice({
   name: "books",
-  initialState,
+  initialState: {
+    books: [
+      {
+        id: uuidv4(),
+        title: "SACH VE MEO",
+        price: "300.000d",
+        category: "aaaaaaaaaaaa",
+        description: "Nguyen con meo",
+        coverImage:
+          "https://www.dtv-ebook.com/images/cover_1/chuyen-con-meo-va-con-chuot-ban-than-cua-no-luis-sepulveda.jpg",
+      },
+      {
+        id: uuidv4(),
+        title: "SACH VE CHIM",
+        price: "300.000d",
+        category: "aaaaaaaaaaaa",
+        description: "Nguyen con meo",
+        coverImage:
+          "https://static.scientificamerican.com/blogs/cache/file/7B451A3D-DC88-45A1-A5FD2D07D3146A30_source.jpg?w=590&h=800&169258BA-F569-48E1-848D1CEF8B65D3B2",
+      },
+      {
+        id: uuidv4(),
+        title: "SACH VE LOAI NGUOI",
+        price: "300.000d",
+        category: "aaaaaaaaaaaa",
+        description: "Nguyen con meo",
+        coverImage:
+          "https://static.scientificamerican.com/blogs/cache/file/7B451A3D-DC88-45A1-A5FD2D07D3146A30_source.jpg?w=590&h=800&169258BA-F569-48E1-848D1CEF8B65D3B2",
+      },
+    ],
+    isLoading: false,
+    error: "",
+    message: "",
+    //   replyTicketError: "",
+    //   searchTicketList: [],
+    //   selectedTicket: {},
+    //   replyMsg: "",
+  },
   reducers: {
     fetchAllBooksLoading: (state) => {
       state.isLoading = true;
