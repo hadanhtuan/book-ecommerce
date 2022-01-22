@@ -36,7 +36,8 @@ async function register(body) {
         return {
             error: false,
             message: "Đăng ký thành công!",
-            token: _token
+            token: _token,
+            role: newUser.role
         };     
     }
     catch(err) {
@@ -64,6 +65,7 @@ async function login(body) {
                     error: false,
                     message: "Đăng nhập thành công",
                     token: _token,
+                    role: user.role
                 };
             } else {
                 return {
@@ -72,10 +74,10 @@ async function login(body) {
                 };
             }
         }
-    } catch (errorr) {
+    } catch (err) {
         return {
         error: true,
-        message: "Đăng nhập thất bại"
+        message: err.message
         };
     }
 }
