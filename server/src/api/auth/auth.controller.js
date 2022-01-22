@@ -3,7 +3,7 @@ const authService = require('./auth.service')
 const ErrorResponse = require("../../../utils/errorResponse");
 
 async function register(req, res, next) {
-    let DTO = await authService.login(req.body);
+    let DTO = await authService.register(req.body);
     if(DTO.error) 
     {
         return next(new ErrorResponse(DTO.message, 400));
@@ -12,7 +12,7 @@ async function register(req, res, next) {
 }
 
 async function login(req, res, next) {
-    let DTO = await authService.register(req.body);
+    let DTO = await authService.login(req.body);
     if(DTO.error) 
     {
         return next(new ErrorResponse(DTO.message, 400));

@@ -7,7 +7,7 @@ const bookSchema=new Schema({
         required: true
     },
     coverImage: {
-        type: Buffer,
+        type: String,
         required: true
     },
     coverImageType: {

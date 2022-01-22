@@ -1,13 +1,16 @@
 const express = require('express')
 const app = express()
+var cors = require('cors')
+ 
+app.use(cors())
 
 const path = require('path')
 const ErrorResponse = require("./utils/errorResponse");
 
 const bodyParser = require('body-parser')
 
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
-app.use(express.json())
+app.use(express.json({  limit: '30mb', extended: true }));
+app.use(express.urlencoded({  limit: '30mb', extended: true }));
 
 app.use(express.static('public'))
 
@@ -36,7 +39,7 @@ app.use((err, req, res, next) => {
 
 //connect to database
 const mongoose=require('mongoose')
-mongoose.connect('mongodb://localhost/book-ecommerce',{
+mongoose.connect('mongodb+srv://book-ecommerce:book-ecommerce@cluster0.sofia.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 })

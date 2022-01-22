@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 var User = require("../../models/user");
 
-async function register(body) {
+
   async function register(body) {
     const email = body.email;
     const password = body.password;
@@ -41,7 +41,6 @@ async function register(body) {
         message: err.message,
       };
     }
-  }
 }
 
 async function login(body) {
