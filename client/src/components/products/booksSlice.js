@@ -23,7 +23,7 @@ const booksSlice = createSlice({
     //   state.searchTicketList = action.payload;
       state.isLoading = false;
     },
-    fetchBooksFail: (state, { payload }) => {
+    fetchAllBooksFail: (state, { payload }) => {
       state.isLoading = false;
       state.message = payload.message;
       state.error = payload.error;
