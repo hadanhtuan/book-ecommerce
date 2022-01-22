@@ -2,12 +2,9 @@ var Orders = require("../../models/orders");
 var User = require("../../models/user");
 var jwt = require("jsonwebtoken");
 
-async function getOrders(token){
+async function getOrders(userId){
     try {
-        let decodedToken = await jwt.verify(token, "secret");
-
-        let userId = decodedToken._id;
-
+        console.log(userId);
         let orders = await Orders.find({ userId });
 
         if(!orders){
