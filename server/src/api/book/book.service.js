@@ -26,6 +26,9 @@ async function addBook(body) {
         return {
             error: true,
             message: err.message,
+        }
+    }
+}
 
 async function getAllBooks(){
     try {
@@ -69,7 +72,7 @@ async function getSingleBook(id){
 }
 
 module.exports= {
-    addBook
+    addBook,
     getAllBooks,
     getSingleBook
 }
