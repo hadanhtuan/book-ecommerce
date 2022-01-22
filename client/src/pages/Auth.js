@@ -7,10 +7,9 @@ import ForgotPassword from "../components/reset-password/ForgotPassword";
 import ResetPassword from "../components/reset-password/ResetPassword"
 
 const Auth = ({ authRoute }) => {
-  const isAuthenticated = false;
   let body
 
-  if (isAuthenticated) return <Redirect to='/' />
+  if (localStorage.getItem("accessToken")) return <Redirect to='/' />
     else {
         body = (
             <>

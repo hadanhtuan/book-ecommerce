@@ -15,6 +15,7 @@ import Cart from "./pages/Cart";
 import User from "./pages/User";
 import Auth from "./pages/Auth";
 import Admin from "./pages/admin-dashboard/Admin";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 
 function App() {
   const user = true;
@@ -24,9 +25,7 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route exact path="/user/:id">
-          <User />
-        </Route>
+        <ProtectedRoute exact path='/user/:id' component={User}/>
         <Route exact path="/book/:id">
           <Book />
         </Route>
@@ -56,14 +55,15 @@ function App() {
         </Route>
         <Route
           exact 
-          path='/reset-password' 
+          path='/reset-password/:resetToken' 
           render={props => <Auth {...props} 
           authRoute='reset-password' />} 
         >
         </Route>
-        <Route path="/cart">
+        {/* <Route path="/cart">
           <Cart />
-        </Route>
+        </Route> */}
+        <ProtectedRoute exact path='/cart' component={Cart}/>
       </Switch>
     </Router>
   );
