@@ -14,6 +14,7 @@ import {
 import Cart from "./pages/Cart";
 import User from "./pages/User";
 import Auth from "./pages/Auth";
+import Admin from "./pages/admin-dashboard/Admin";
 
 function App() {
   const user = true;
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route exact path="/book/:id">
           <Book />
+        </Route>
+        <Route exact path="/admin">
+          <Admin />
         </Route>
         <Route
           exact 
