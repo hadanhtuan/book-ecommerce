@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "./passwordAction";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const passVerificationError = {
 	isLenthy: false,
@@ -13,6 +13,7 @@ const passVerificationError = {
 };
 
 const ForgetPassword = () => {
+    const { resetToken } = useParams();
     const dispatch = useDispatch();
 
 	const [password, setPassword] = useState('');
@@ -57,7 +58,7 @@ const ForgetPassword = () => {
 		e.preventDefault();
 
 		const formData = {
-			email,
+			resetToken,
 			password
 		};
 		dispatch(updatePassword(formData));

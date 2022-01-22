@@ -56,7 +56,7 @@ function App() {
         </Route>
         <Route
           exact 
-          path='/reset-password' 
+          path='/reset-password/:resetToken' 
           render={props => <Auth {...props} 
           authRoute='reset-password' />} 
         >
