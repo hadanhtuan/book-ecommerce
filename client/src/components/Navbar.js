@@ -1,9 +1,17 @@
 import React from 'react';
 import "./css/Navbar.css";
+import { Link, useHistory } from 'react-router-dom';
+
 
 const Navbar = () => {
-  return (
-	<nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+	const history = useHistory()
+	const handleLogout = () => {
+		window.localStorage.removeItem("accessToken");
+		history.push("/login");
+	}
+
+	return (
+		<nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 			<a href="/" className="navbar-brand">Brand<b>Name</b></a>  		
 			<button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
 				<span className="navbar-toggler-icon"></span>
@@ -20,7 +28,7 @@ const Navbar = () => {
 							<a href="#" className="dropdown-item">Digital Marketing</a>
 						</div>
 					</div> */}
-					<a href="/cart" className="cart-icon">
+					<a to="/cart" className="cart-icon">
 						<i className="material-icons">shopping_cart</i>
 					</a>
 				</div>
@@ -34,16 +42,37 @@ const Navbar = () => {
 						</div>
 					</div>
 				</form>
-				
-				<div className="navbar-nav ml-auto action-buttons">
-					<div className="nav-item dropdown">
-						<a href="/login" className="nav-link dropdown-toggle mr-4">Login</a>
-						
-					</div>
-					<div className="nav-item dropdown">
-						<a href="/register" className="btn btn-primary dropdown-toggle sign-up-btn">Sign up</a>
-					</div>
-				</div>
+				{
+					!localStorage.getItem("accessToken") ? (
+						<div className="navbar-nav ml-auto action-buttons">
+							<div className="nav-item dropdown">
+								<a href="/login" className="nav-link dropdown-toggle mr-4">Login</a>
+								
+							</div>
+							<div className="nav-item dropdown">
+								<a href="/register" className="btn btn-primary dropdown-toggle sign-up-btn">Sign up</a>
+							</div>
+						</div>
+					) : (
+
+						<div class="navbar-nav ml-auto">
+							<div class="nav-item dropdown">
+								<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="https://image.thanhnien.vn/460x306/Uploaded/2022/lxwpcqjwp/2021_03_14/av-02_ayrt.jpeg" class="avatar" alt="Avatar"/> Paula Wilson <b class="caret"></b></a>
+							<div class="dropdown-menu">
+								<a href="#" class="dropdown-item">Danh sách đã mua</a>
+								
+								<a href="#" class="dropdown-item">Giỏ hàng của tôi</a>
+								<div class="dropdown-divider"></div>
+								<a onClick={handleLogout} class="dropdown-item text-danger">
+									Logout
+								</a>
+							</div>
+							</div>
+						</div>
+					)
+				}
+
+
 			</div>
 		</nav>
   );

@@ -11,13 +11,14 @@ import {
 export const reqPasswordReset = email => async dispatch => {
 	try {
 		dispatch(reqPending());
-		const { error, message } = await reqPassword(email);
-
-		if (error === false) {
-			return dispatch(reqSuccess({error, message}));
+		const response = await reqPassword(email);
+		console.log(response);
+		if (response.error === false) {
+			dispatch(reqSuccess(response));
+			return
 		}
 
-		dispatch(reqFail({error, message}));
+		dispatch(reqFail(response));
 	} catch (err) {
 		dispatch(reqFail({error: true, message: err.message}));
 	}
@@ -30,7 +31,8 @@ export const updatePassword = formData => async dispatch => {
 		const response = await updateUserPassword(formData);
 
 		if (response.error === false) {
-			return dispatch(updatePassSuccess(response));
+			dispatch(updatePassSuccess(response));
+			return;
 		}
 
 		dispatch(reqFail(response));

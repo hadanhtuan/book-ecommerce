@@ -2,7 +2,7 @@ import {
     postBookPending,
     postBookSuccess,
     postBookFail,
-  } from "./postBookSlicer";
+  } from "./postBookSlice";
 
   import { postNewBook } from "../../api/bookApi";
   

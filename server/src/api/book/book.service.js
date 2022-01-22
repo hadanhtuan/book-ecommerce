@@ -71,8 +71,32 @@ async function getSingleBook(id){
     }
 }
 
+async function findBooksByCategory(type){
+    try{
+        let listBooks=await Book.find({category:type});
+        if(listBooks.length==0){
+            return {
+                error: true,
+                message: 'Không tìm thấy sách thuộc thể loại cần tìm'
+            }
+        }
+        return {
+            error: false,
+            message: `Danh sách các quyển thuộc thể loại ${listBooks[0].category}`,
+            books: listBooks
+        }
+    }
+    catch(err){
+        return{
+            error: true,
+            message: err.message
+        }
+    }
+}
+
 module.exports= {
     addBook,
     getAllBooks,
-    getSingleBook
+    getSingleBook,
+    findBooksByCategory
 }

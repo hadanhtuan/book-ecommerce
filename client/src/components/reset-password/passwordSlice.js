@@ -6,8 +6,9 @@ const initialState = {
 	message: "",
 	showUpdatePassForm: false,
 };
-const passwordReset = createSlice({
-	name: "passwordReset",
+
+const passwordSlice = createSlice({
+	name: "passwordSlice",
 	initialState,
 	reducers: {
 		reqPending: state => {
@@ -32,7 +33,7 @@ const passwordReset = createSlice({
 	},
 });
 
-const { reducer, actions } = passwordReset;
+const { reducer, actions } = passwordSlice;
 
 export const {
 	reqPending,
