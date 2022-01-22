@@ -10,6 +10,15 @@ async function getOrders (req, res, next) {
     res.status(200).json(DTO)
 }
 
+async function postOrders (req, res, next) {
+    let DTO=await userService.postOrders(req.userId, req.body.orders);
+    if(DTO.error){
+        return next(new ErrorResponse(DTO.message, 500));
+    }
+    res.status(200).json(DTO)
+}
+
 module.exports = {
-    getOrders
+    getOrders,
+    postOrders
 }
