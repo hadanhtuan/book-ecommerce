@@ -1,29 +1,25 @@
 import axios from "axios";
 
-const baseUrl ="http://localhost:3000/api";
+const baseUrl = 'http://localhost:3000/api';
 
-export const userLogin = (userInfo) => {
+export const fetchUser = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data } = await axios.post(`${baseUrl}/auth/login`, userInfo);
-        if(data.error === false){
-            resolve(data);
+        const accessToken = localStorage.getItem("accessToken");
+  
+        if (!accessToken) {
+          reject({error: true ,message: "Token not found!"});
         }
+  
+        const { data } = await axios.get(`${baseUrl}/user`, {
+          headers: {
+            Authorization: accessToken,
+          },
+        });
+  
+        resolve(data);
       } catch (error) {
         reject(error.response.data);
       }
     });
-};
-
-export const userRegister = (userInfo) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const { data } = await axios.post(`${baseUrl}/auth/register`, userInfo);
-      if(data.error === false){
-          resolve(data);
-      }
-    } catch (error) {
-      reject(error.response.data);
-    }
-  });
 };

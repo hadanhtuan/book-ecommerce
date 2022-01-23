@@ -8,7 +8,7 @@ import "../css/Admin.css";
 
 const initialFormData = {
     title: "",
-    price: 0,
+    price: "",
     category: "",
     description: "",
     coverImage: "",
@@ -104,6 +104,7 @@ const Admin = () => {
                             class="form-control"
                             id="title"
                             placeholder="Enter title..."
+                            required
                         />
                     </div>
                     <div class="form-group">
@@ -116,6 +117,7 @@ const Admin = () => {
                             class="form-control"
                             id="price"
                             placeholder="Enter price..."
+                            required
                         />
                     </div>
                     <div class="form-group">
@@ -126,12 +128,16 @@ const Admin = () => {
                             name="category"
                             value={formData.category}
                             onChange={handleOnChange}
+                            required
                         >
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            <option hidden> -- Select an category -- </option>
+                            <option>Comic</option>
+                            <option>Dictionary</option>
+                            <option>Nonfiction</option>
+                            <option>Novel</option>
+                            <option>Science fiction</option>
+                            <option>Thriller</option>
+                        
                         </select>
                     </div>
                     <div class="form-group">
@@ -143,15 +149,17 @@ const Admin = () => {
                             name="description"
                             value={formData.description}
                             onChange={handleOnChange}
+                            required
                         >
                         </textarea>
                     </div>
                     <div class="form-group">
                         <label >Cover image</label>
                         <FileBase
-                        type="file"
-                        mutiple={false}
-                        onDone={({base64}) => setFormData({
+                            required
+                            type="file"
+                            mutiple={false}
+                            onDone={({base64}) => setFormData({
                                 ...formData, coverImage: getBase64OfImage(base64), 
                                 coverImageType: getImageType(base64)
                             })}

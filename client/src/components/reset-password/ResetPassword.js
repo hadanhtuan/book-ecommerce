@@ -124,7 +124,7 @@ const ForgetPassword = () => {
             <div className="row mb-4 px-3">
                 <div className="col-xs-12 col-md-6">
                     <small className="font-weight-bold">
-                        Remeber password? <a className="text-danger ">Login</a>
+                        Remeber password? <Link to='/login' className="text-danger ">Login</Link>
                     </small>
                 </div>
             </div>

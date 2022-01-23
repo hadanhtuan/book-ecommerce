@@ -1,11 +1,50 @@
-import React from "react";
-import "./css/Cart.css";
-import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from "react";
+import "../css/Cart.css";
+import Navbar from "../../components/Navbar";
+import CartItem from "./CartItem";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { orderBooks } from "./orderAction";
+
 
 const Cart = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { isLoading, message, error } = useSelector((state) => state.order)
+  const { isAuthenticated } = useSelector((state) => state.auth)
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem('cartItems')))
+
+  const handleOrder = async (e) => {
+      const booksOrderList = items.map(item => {
+        return { _id: item._id, quantity: item.quantity }
+      })
+
+      dispatch(orderBooks(booksOrderList))
+
+     
+      localStorage.setItem('cartItems', JSON.stringify([]))
+      history.push('/');
+        
+  }
+
+  console.log(isAuthenticated)
+
   return (
     <div>
       <Navbar />
+            {message && (
+                <div class={`alert alert-${error ? 'danger' : 'success'}`} role="alert">
+                    {message}
+                </div>
+            )}
+            
+            {isLoading && (
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            )}
+            
       <div className="container px-4 py-5 mx-auto w-90">
         <div className="row d-flex justify-content-center">
           <div className="col-5">
@@ -25,84 +64,12 @@ const Cart = () => {
             </div>
           </div>
         </div>
-        <div className="row d-flex justify-content-center border-top">
-          <div className="col-5">
-            <div className="row d-flex">
-              <div className="book">
-                {" "}
-                <img
-                  src="https://i.imgur.com/2DsA49b.jpg"
-                  className="book-img"
-                />{" "}
-              </div>
-              <div className="my-auto flex-column d-flex pad-left">
-                <h6 className="mob-text">Thinking, Fast and Slow</h6>
-                <p className="mob-text">Daniel Kahneman</p>
-              </div>
-            </div>
-          </div>
-          <div className="my-auto col-7">
-            <div className="row text-right">
-              <div className="col-4">
-                <p className="mob-text">Digital</p>
-              </div>
-              <div className="col-4">
-                <div className="row d-flex justify-content-end px-3">
-                  <p className="mb-0" id="cnt1">
-                    1
-                  </p>
-                  <div className="d-flex flex-column plus-minus">
-                    {" "}
-                    <span className="vsm-text plus">+</span>{" "}
-                    <span className="vsm-text minus">-</span>{" "}
-                  </div>
-                </div>
-              </div>
-              <div className="col-4">
-                <h6 className="mob-text">$9.99</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row d-flex justify-content-center border-top">
-          <div className="col-5">
-            <div className="row d-flex">
-              <div className="book">
-                {" "}
-                <img
-                  src="https://i.imgur.com/Oj1iQUX.jpg"
-                  className="book-img"
-                />{" "}
-              </div>
-              <div className="my-auto flex-column d-flex pad-left">
-                <h6 className="mob-text">
-                  Homo Deus: A Brief
-                  <br />
-                  History of Tomorrow
-                </h6>
-                <p className="mob-text">Yuval Noah Harari</p>
-              </div>
-            </div>
-          </div>
-          <div className="my-auto col-7">
-            <div className="row text-right">
-              <div className="col-4">
-                <p className="mob-text">Paperback</p>
-              </div>
-              <div className="col-xs-6" style={{ marginLeft: '13px' }}>
-                            <div className="product_quantity"> <span>QTY: </span> <input id="quantity_input" type="text" pattern="[0-9]*" defaultValue={1} />
-                                <div className="quantity_buttons">
-                                <div id="quantity_inc_button" className="quantity_inc quantity_control"><i className="fas fa-chevron-up" /></div>
-                                <div id="quantity_dec_button" className="quantity_dec quantity_control"><i className="fas fa-chevron-down" /></div>
-                                </div>
-                            </div>
-                            </div>
-              <div className="col-4">
-                <h6 className="mob-text">$13.50</h6>
-              </div>
-            </div>
-          </div>
-        </div>
+        {
+          items.map((item) => (
+            <CartItem item={item} setItems={setItems} key={item._id} />
+          ))
+        }
+        
         <div className="row justify-content-center">
           <div className="col-lg-12">
             <div className="card">
@@ -173,26 +140,36 @@ const Cart = () => {
                 </div>
                 <div className="col-lg-4 mt-2">
                   <div className="row d-flex justify-content-between px-4">
-                    <p className="mb-1 text-left">Subtotal</p>
-                    <h6 className="mb-1 text-right">$23.49</h6>
+                    <p className="mb-1 text-left">Total</p>
+                    <h6 className="mb-1 text-right">{
+                      items.reduce((sum, {quantity, price}) => {
+                          return sum + (quantity*price)
+                      }, 0)
+                    } đ</h6>
                   </div>
-                  <div className="row d-flex justify-content-between px-4">
+                  {/* <div className="row d-flex justify-content-between px-4">
                     <p className="mb-1 text-left">Shipping</p>
                     <h6 className="mb-1 text-right">$2.99</h6>
-                  </div>
+                  </div> */}
                   <div
                     className="row d-flex justify-content-between px-4"
                     id="tax"
                   >
-                    <p className="mb-1 text-left">Total (tax included)</p>
-                    <h6 className="mb-1 text-right">$26.48</h6>
+                    {/* <p className="mb-1 text-left">Total (tax included)</p>
+                    <h6 className="mb-1 text-right">$26.48</h6> */}
                   </div>{" "}
-                  <button className="btn-block btn-blue">
+                  <button className="btn-block btn-blue" data-toggle="modal" data-target="#confirmOrdersCenter">
                     {" "}
                     <span>
                       {" "}
                       <span id="checkout">Checkout</span>{" "}
-                      <span id="check-amt">$26.48</span>{" "}
+                      <span id="check-amt">
+                      {
+                        items.reduce((sum, {quantity, price}) => {
+                            return sum + (quantity*price)
+                        }, 0)
+                      } đ
+                      </span>{" "}
                     </span>{" "}
                   </button>
                 </div>
@@ -201,7 +178,28 @@ const Cart = () => {
           </div>
         </div>
       </div>
+
+      <div class="modal fade" id="confirmOrdersCenter" tabIndex="-1" role="dialog" aria-labelledby="confirmOrdersCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmOrdersLongTitle">Xác nhận mua hàng</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Bạn có thật sự muốn mua hàng
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+              <button type="button" class="btn btn-primary" onClick={handleOrder} data-dismiss="modal">Đồng ý</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    
   );
 };
 

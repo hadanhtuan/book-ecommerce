@@ -1,36 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	isLoading: false,
-	error: false,
-	message: "",
-  isAuthenticated: false,
-	// showUpdatePassForm: false,
+  user: {},
+  isLoading: false,
+  error: false,
+  message: "",
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginStart: (state, { payload }) => {
+    getUserPending: (state) => {
       state.isLoading = true;
     },
-    loginSuccess: (state, { payload }) => {
+    getUserSuccess: (state, { payload }) => {
       state.isLoading = false;
-      state.isAuthenticated = true;
+      state.user = { email: payload.email, role: payload.role, _id: payload._id};
       state.error = payload.error;
-      state.message = payload.message;
     },
-    loginFailure: (state, { payload }) => {
+    getUserFail: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload.error;
-      state.message = payload.message;
     },
+    deleteUserSuccess: (state, { payload }) => {
+        state.user = {};
+    }
   },
 });
 
-const { reducer, actions } = userSlice;
+export const {
+  getUserPending,
+  getUserSuccess,
+  getUserFail,
+  deleteUserSuccess
+} = userSlice.actions;
 
-export const { loginStart, loginSuccess, loginFailure } = actions;
-
-export default reducer;
+export default userSlice.reducer;
