@@ -11,7 +11,15 @@ async function getOrders (req, res, next) {
 }
 
 async function postOrders (req, res, next) {
-    let DTO=await userService.postOrders(req.userId, req.body.orders);
+    let DTO=await userService.postOrders(req.userId, req.body.orders, req.body.totalPrice);
+    if(DTO.error){
+        return next(new ErrorResponse(DTO.message, 500));
+    }
+    res.status(200).json(DTO)
+}
+
+async function getUser (req, res, next) {
+    let DTO=await userService.getUser(req.userId);
     if(DTO.error){
         return next(new ErrorResponse(DTO.message, 500));
     }
@@ -20,5 +28,6 @@ async function postOrders (req, res, next) {
 
 module.exports = {
     getOrders,
-    postOrders
+    postOrders,
+    getUser
 }

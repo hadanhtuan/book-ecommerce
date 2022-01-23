@@ -28,14 +28,15 @@ async function getOrders(userId){
     }
 }
 
-async function postOrders(userId, reqOrders){
+async function postOrders(userId, reqOrders, totalPrice){
     try {
         let orders = await Orders.findOne({ userId });
-
+        console.log(totalPrice)
         if(!orders) {  //nếu chưa có userId thì lưu vào
             const newOrders = new Orders({
                 userId,
-                ordersList: reqOrders
+                ordersList: reqOrders,
+                totalPrice
             });
             await newOrders.save();
         }  
@@ -58,8 +59,9 @@ async function postOrders(userId, reqOrders){
             }
 
             orders.ordersList = reqOrders  //phải thay đổi luôn cả biến mảng. Phải dùng reqOrders vì nếu dùng oldOrders thì vẫn sẽ không save
+            orders.totalPrice+=totalPrice
             await orders.save();
-            console.log(reqOrders)
+            console.log(orders.totalPrice)
         }
         return {
             error: false,
@@ -75,7 +77,35 @@ async function postOrders(userId, reqOrders){
     }
 }
 
+async function getUser(userId) {
+    try {
+        const user = await User.findById(userId)
+        if(!user)
+        {
+            return {
+                error: true,
+                message: "Khong tim thay user"
+            }
+        }
+        
+        return {
+            error: false,
+            message: "Tim thay user",
+            _id: user._id,
+            email: user.email,
+            role: user.role
+        }
+    }
+    catch(err) {
+        return {
+            err: true,
+            message: err.message
+        }
+    }
+}
+
 module.exports= {
     getOrders,
-    postOrders
+    postOrders,
+    getUser
 }
