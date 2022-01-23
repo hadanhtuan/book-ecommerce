@@ -7,7 +7,7 @@ const ordersSchema=new Schema({
         ref: 'User',                        
         required: true
     },
-    books: {
+    ordersList: {
         type: Array,   // [ { bookId, quantity} ]
         required: true
     },
