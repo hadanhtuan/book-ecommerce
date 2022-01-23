@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { register } from "./user/userAction";
+import { register } from "./auth/authAction";
 
 const RegisterForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const {isLoading, message, error } = useSelector(state => state.user)
+  const {isLoading, message, error } = useSelector(state => state.auth)
 
   const [require, setRequire] = useState({
     confirmPw: "",
@@ -116,7 +116,7 @@ const RegisterForm = () => {
             required
           />
           <label for="my-input" className="custom-control-label">
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">I accept the Terms of Use & Privacy Policy</a>
+            <Link to="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">I accept the Terms of Use & Privacy Policy</Link>
           </label>
         </div>
       </div>

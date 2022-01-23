@@ -23,7 +23,7 @@ const Products = () => {
 
   return (
 
-      <div className="col-xs-12 col-md-10">
+      <div id="products" className="col-xs-12 col-md-10">
           {message && (
                 <div class={`alert alert-${error ? 'danger' : 'success'}`} role="alert">
                     {message}
@@ -39,7 +39,7 @@ const Products = () => {
         <div className="container">
           <div className="row">
             {books.map((item, id) => (
-              <Product item={item} key={`${id}`} />
+              <Product item={item} id={item._id} key={`${id}`} />
             ))}
           </div>
         </div>

@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import "./css/LoginForm.css";
-import { login } from "./user/userAction";
+import { login } from "./auth/authAction";
 
 const LoginForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const {isLoading, message, error } = useSelector(state => state.user)
+  const {isLoading, message, error } = useSelector(state => state.auth)
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",

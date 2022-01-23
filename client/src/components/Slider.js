@@ -1,5 +1,6 @@
 import React from 'react';
 import "./css/Slider.css"
+import { Link } from 'react-router-dom';
 
 const Slider = () => {
   return (

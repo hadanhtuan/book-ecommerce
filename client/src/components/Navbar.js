@@ -1,24 +1,34 @@
 import React from 'react';
 import "./css/Navbar.css";
 import { Link, useHistory } from 'react-router-dom';
+import { logout } from './auth/authAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Navbar = () => {
+	const dispatch = useDispatch()
 	const history = useHistory()
+
+	const { user } = useSelector((state) => state.user)
+
 	const handleLogout = () => {
-		window.localStorage.removeItem("accessToken");
+		dispatch(logout())
 		history.push("/login");
 	}
 
+	console.log(user)
+
 	return (
 		<nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-			<a href="/" className="navbar-brand">Brand<b>Name</b></a>  		
+			<Link to="/" className="navbar-brand">Wds<b>Store</b>
+			</Link>
+
 			<button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
 				<span className="navbar-toggler-icon"></span>
 			</button>
 			<div id="navbarCollapse" className="collapse navbar-collapse justify-content-start">
 				<div className="navbar-nav">
-					<a href="/" className="nav-item nav-link">Home</a>
+					<Link to="/" className="nav-item nav-link">Home</Link>
 					{/* <div className="nav-item dropdown">
 						<a href="#" data-toggle="dropdown" className="nav-item nav-link dropdown-toggle">Services</a>
 						<div className="dropdown-menu">					
@@ -28,9 +38,9 @@ const Navbar = () => {
 							<a href="#" className="dropdown-item">Digital Marketing</a>
 						</div>
 					</div> */}
-					<a to="/cart" className="cart-icon">
+					<Link to="/cart" className="cart-icon">
 						<i className="material-icons">shopping_cart</i>
-					</a>
+					</Link>
 				</div>
 				<form className="navbar-form form-inline">
 					<div className="input-group search-box">								
@@ -46,22 +56,22 @@ const Navbar = () => {
 					!localStorage.getItem("accessToken") ? (
 						<div className="navbar-nav ml-auto action-buttons">
 							<div className="nav-item dropdown">
-								<a href="/login" className="nav-link dropdown-toggle mr-4">Login</a>
+								<Link to="/login" className="nav-link dropdown-toggle mr-4">Login</Link>
 								
 							</div>
 							<div className="nav-item dropdown">
-								<a href="/register" className="btn btn-primary dropdown-toggle sign-up-btn">Sign up</a>
+								<Link to="/register" className="btn btn-primary dropdown-toggle sign-up-btn">Sign up</Link>
 							</div>
 						</div>
 					) : (
 
 						<div class="navbar-nav ml-auto">
 							<div class="nav-item dropdown">
-								<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="https://image.thanhnien.vn/460x306/Uploaded/2022/lxwpcqjwp/2021_03_14/av-02_ayrt.jpeg" class="avatar" alt="Avatar"/> Paula Wilson <b class="caret"></b></a>
+								<a data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="https://image.thanhnien.vn/460x306/Uploaded/2022/lxwpcqjwp/2021_03_14/av-02_ayrt.jpeg" class="avatar" alt="Avatar"/> Paula Wilson <b class="caret"></b></a>
 							<div class="dropdown-menu">
-								<a href="#" class="dropdown-item">Danh sách đã mua</a>
+								<Link to="#" class="dropdown-item">Danh sách đã mua</Link>
 								
-								<a href="#" class="dropdown-item">Giỏ hàng của tôi</a>
+								<Link to="/cart" class="dropdown-item">Giỏ hàng của tôi</Link>
 								<div class="dropdown-divider"></div>
 								<a onClick={handleLogout} class="dropdown-item text-danger">
 									Logout

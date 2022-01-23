@@ -11,7 +11,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Cart from "./pages/Cart";
+import Cart from "./pages/order-books/Cart";
 import User from "./pages/User";
 import Auth from "./pages/Auth";
 import Admin from "./pages/admin-dashboard/Admin";

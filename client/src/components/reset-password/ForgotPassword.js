@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { reqPasswordReset } from './passwordAction';
+import { Link } from 'react-router-dom';
 
 const ForgotPassword = () => {
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const ForgotPassword = () => {
             
             <div className="row mb-4 px-3">
                 <small className="font-weight-bold">
-                    Remeber password? <a className="text-danger ">Login</a>
+                    Remeber password? <Link to='/login' className="text-danger ">Login</Link>
                 </small>
             </div>
         </div>
