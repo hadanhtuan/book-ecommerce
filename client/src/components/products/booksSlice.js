@@ -5,10 +5,10 @@ const initialState = {
   isLoading: false,
   error: "",
   message: "",
-//   replyTicketError: "",
-//   searchTicketList: [],
-//   selectedTicket: {},
-//   replyMsg: "",
+  //   replyTicketError: "",
+  //   searchTicketList: [],
+  //   selectedTicket: {},
+  //   replyMsg: "",
 };
 
 const booksSlice = createSlice({
@@ -27,7 +27,9 @@ const booksSlice = createSlice({
       state.message = payload.message;
       state.error = payload.error;
     },
-
+    fetchFilteredBooks: (state, { payload }) => {
+      state.books = payload;
+    },
   },
 });
 
@@ -37,6 +39,7 @@ export const {
   fetchAllBooksLoading,
   fetchAllBooksSuccess,
   fetchAllBooksFail,
+  fetchFilteredBooks,
 } = actions;
 
 export default reducer;
