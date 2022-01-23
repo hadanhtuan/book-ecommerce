@@ -35,14 +35,14 @@ async function postOrders(userId, reqOrders){
         if(!orders) {  //nếu chưa có userId thì lưu vào
             const newOrders = new Orders({
                 userId,
-                books: reqOrders
+                ordersList: reqOrders
             });
             await newOrders.save();
         }  
 
         //nếu có rồi thì lưu ngay(ghi đè thêm) vào document đó
         else {
-            let oldOrders = orders.books;
+            let oldOrders = orders.ordersList;
 
             for(let i=0; i< oldOrders.length; i++)                    
             {
@@ -57,7 +57,7 @@ async function postOrders(userId, reqOrders){
                 if(!chk) { reqOrders.push(oldOrders[i]) } 
             }
 
-            orders.books = reqOrders  //phải thay đổi luôn cả biến mảng. Phải dùng reqOrders vì nếu dùng oldOrders thì vẫn sẽ không save
+            orders.ordersList = reqOrders  //phải thay đổi luôn cả biến mảng. Phải dùng reqOrders vì nếu dùng oldOrders thì vẫn sẽ không save
             await orders.save();
             console.log(reqOrders)
         }
