@@ -30,12 +30,15 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.error = payload.error;
       state.message = payload.message;
-    }
+    },
+    setAuth: (state, { payload }) => {
+      state.isAuthenticated = true;
+    },
   },
 });
 
 const { reducer, actions } = authSlice;
 
-export const { loginStart, loginSuccess, loginFailure, logoutSuccess } = actions;
+export const { loginStart, loginSuccess, loginFailure, logoutSuccess, setAuth } = actions;
 
 export default reducer;

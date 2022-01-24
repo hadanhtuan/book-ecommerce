@@ -95,7 +95,7 @@ const Admin = () => {
                 )}
                 <form onSubmit={handleOnSubmit}>
                     <div class="form-group">
-                        <label for="title">Title</label>
+                        <label for="title">Tên sách</label>
                         <input
                             type="text"
                             name="title"
@@ -103,12 +103,12 @@ const Admin = () => {
                             onChange={handleOnChange}
                             class="form-control"
                             id="title"
-                            placeholder="Enter title..."
+                            placeholder="Nhập tên sách..."
                             required
                         />
                     </div>
                     <div class="form-group">
-                        <label for="price">Price</label>
+                        <label for="price">Giá</label>
                         <input
                             type="number"
                             name="price"
@@ -116,12 +116,12 @@ const Admin = () => {
                             onChange={handleOnChange}
                             class="form-control"
                             id="price"
-                            placeholder="Enter price..."
+                            placeholder="Nhập giá..."
                             required
                         />
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
+                        <label for="category">Thể loại</label>
                         <select
                             class="form-control"
                             id="category"
@@ -130,23 +130,30 @@ const Admin = () => {
                             onChange={handleOnChange}
                             required
                         >
-                            <option hidden> -- Select an category -- </option>
+                            <option hidden> -- Chọn một thể loại -- </option>
                             <option>Comic</option>
-                            <option>Dictionary</option>
                             <option>Nonfiction</option>
-                            <option>Novel</option>
-                            <option>Science fiction</option>
                             <option>Thriller</option>
+                            <option>Novel</option>
+                            <option>Science</option>
+                            <option>Detective</option>
+                            {/* <div className="form-group">  <Link to='/filter/Comic' >Comic</Link> </div>
+                    <div className="form-group">  <Link to='/filter/Nontification' >Nontification</Link> </div>
+                    <div className="form-group">  <Link to='/filter/Thriller' >Thriller</Link> </div>
+                    <div className="form-group">  <Link to='/filter/Novel' >Novel</Link> </div>
+                    <div className="form-group">  <Link to='/filter/Science' >Science</Link> </div>
+                    <div className="form-group">  <Link to='/filter/Detective' >Detective</Link> </div> */}
                         
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
+                        <label for="description">Mô tả</label>
                         <textarea
                             class="form-control"
                             id="description"
                             rows="3"
                             name="description"
+                            placeholder="Nhập mô tả..."
                             value={formData.description}
                             onChange={handleOnChange}
                             required
@@ -154,7 +161,7 @@ const Admin = () => {
                         </textarea>
                     </div>
                     <div class="form-group">
-                        <label >Cover image</label>
+                        <label >Ảnh bìa sách</label>
                         <FileBase
                             required
                             type="file"
@@ -166,7 +173,7 @@ const Admin = () => {
                         />
                     </div>
                     <button type="submit" className="btn btn-blue text-center">
-                        Post
+                        Đăng sách
                     </button>
                 </form>
             </div>

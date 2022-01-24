@@ -26,7 +26,7 @@ export const updateUserPassword = formData => {
 			console.log(data);
 			resolve(data);
 		} catch (error) {
-			reject(error);
+			reject(error.response.data);
 		}
 	});
 };

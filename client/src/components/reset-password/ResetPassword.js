@@ -1,70 +1,88 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import { updatePassword } from "./passwordAction";
-import { Link, useParams } from "react-router-dom";
+import PasswordStrengthMeter from "../PasswordStrengthMeter";
 
-
-const passVerificationError = {
-	isLenthy: false,
-	hasUpper: false,
-	hasLower: false,
-	hasNumber: false,
-	hasSpclChr: false,
-	confirmPass: false,
-};
 
 const ForgetPassword = () => {
     const { resetToken } = useParams();
 
     const dispatch = useDispatch();
 
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
-    const [passwordError, setPasswordError] = useState(passVerificationError);
+	const history = useHistory();
+    const [passwordLength, setPasswordLength] = useState(false);
+    const [containsNumbers, setContainsNumbers] = useState(false);
+    const [isUpperCase, setIsUpperCase] = useState(false);
+    const [isEqualPassword, setIsEqualPassword] = useState(false);
+    const { isLoading, message, error } = useSelector((state) => state.password);
 
-	const { isLoading, error, message, email } = useSelector(
-		state => state.password
-	);
 
-	const handleOnChange = e => {
-		const { name, value } = e.target;
+    const [require, setRequire] = useState({
+        confirmPw: "",
+        checkbox: false,
+    }); // check confirm password and checkbox filled
+    const [userInfo, setUserInfo] = useState({
+        password: "",
+    });
 
-		if (name === "password") {
-		    setPassword(value);
-			const isLenthy = value.length > 8;
-			const hasUpper = /[A-Z]/.test(value);
-			const hasLower = /[a-z]/.test(value);
-			const hasNumber = /[0-9]/.test(value);
-			const hasSpclChr = /[@,#,$,%,&]/.test(value);
+  // check Number
+  const checkForNumbers = (string) => {
+    var matches = string.match(/\d+/g);
 
-			setPasswordError({
-				...passwordError,
-				isLenthy,
-				hasUpper,
-				hasLower,
-				hasNumber,
-				hasSpclChr,
-			});
-		}
+    setContainsNumbers(matches != null ? true : false);
+  };
 
-		if (name === "confirmPassword") {
-            setConfirmPassword(value);
-			setPasswordError({
-				...passwordError,
-				confirmPass: password === value,
-			});
-		}
-	};
+  // check for upper case
+  const checkForUpperCase = (string) => {
+    var matches = string.match(/[A-Z]/);
+
+    setIsUpperCase(matches != null ? true : false);
+  };
+    
+    const handlePasswordChange = (e) => {
+        setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+      };
+    
+      const handleConfirmPasswordChange = (e) => {
+        setRequire({ ...require, confirmPw: e.target.value });
+      };
 
 	const handleOnSubmit = e => {
-		e.preventDefault();
+		
+        if (passwordLength && containsNumbers && isUpperCase && isEqualPassword) {
+            e.preventDefault();
 
-		const formData = {
-			resetToken,
-			password
-		};
-		dispatch(updatePassword(formData));
+            const formData = {
+                resetToken,
+                password: userInfo.password
+            };
+
+		    dispatch(updatePassword(formData));
+
+          } else {
+            e.preventDefault();
+      
+            alert("Vui lòng nhập mật khẩu ít nhất có 8 kí tự và chứa 1 chữ in Hoa và mật khẩu phải bằng mật khẩu xác nhận");
+          }
 	};
+
+    useEffect(() => {
+        console.log(" ");
+        checkForNumbers(userInfo.password);
+        checkForUpperCase(userInfo.password);
+        setPasswordLength(userInfo.password.length > 7 ? true : false);
+        if (require.confirmPw && userInfo.password === require.confirmPw) {
+          setIsEqualPassword(true);
+        } else {
+          setIsEqualPassword(false);
+        }
+        console.log("confirm", isEqualPassword);
+        console.log("confirmpw", require.confirmPw);
+        console.log("password", userInfo.password);
+        console.log("contain number", containsNumbers);
+        console.log("upperCase", isUpperCase);
+      }, [userInfo.password, require.confirmPw]);
 
     return (
         <div className="col-lg-6">
@@ -87,44 +105,45 @@ const ForgetPassword = () => {
                 </div>
             )}
             <form onSubmit={handleOnSubmit}>
-                <div className="row px-3">
-                    <label className="mb-1">
-                        <h6 className="mb-0 text-sm">Password</h6>
-                    </label>
-                    <input
-                        class="form-control"
-                        type="password"
-                        name="password"
-                        value={password}
-						onChange={handleOnChange}
-                        placeholder="Enter password"
-                        required
-                    />
+            <div className="row px-3">
+                <label className="mb-1">
+                    <h6 className="mb-0 text-sm">Mật khẩu</h6>
+                </label>
+                <input
+                    className="mb-4"
+                    type="password"
+                    name="password"
+                    placeholder="Nhập mật khẩu..."
+                    onChange={(e) => handlePasswordChange(e)}
+                    value={userInfo.password}
+                    required
+                />
                 </div>
-                <div className="row px-3 mt-3">
-                    <label className="mb-1">
-                        <h6 className="mb-0 text-sm">Confirm password</h6>
-                    </label>
-                    <input
-                        class="form-control"
-                        type="password"
-                        name="confirmPassword"
-                        value={confirmPassword}
-						onChange={handleOnChange}
-                        placeholder="Confirm password"
-                        required
-                    />
+                <PasswordStrengthMeter password={userInfo.password} />
+                <div className="row px-3">
+                <label className="mb-1">
+                    <h6 className="mb-0 text-sm">Nhập lại mật khẩu</h6>
+                </label>
+                <input
+                    className="mb-4"
+                    type="password"
+                    name="confirmpassword"
+                    placeholder="Nhập lại mật khẩu..."
+                    onChange={(e) => handleConfirmPasswordChange(e)}
+                    value={require.confirmPw}
+                    required
+                />
                 </div>
                 <div className="row mb-3 px-3">
                     <button type="submit" className="btn btn-blue text-center">
-                        Reset password
+                        Cập nhật lại mật khẩu
                     </button>
                 </div>
             </form>
             <div className="row mb-4 px-3">
                 <div className="col-xs-12 col-md-6">
                     <small className="font-weight-bold">
-                        Remeber password? <Link to='/login' className="text-danger ">Login</Link>
+                        Đã nhớ mật khẩu? <Link to='/login' className="text-danger ">Login</Link>
                     </small>
                 </div>
             </div>

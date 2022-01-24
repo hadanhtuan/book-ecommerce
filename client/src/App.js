@@ -12,26 +12,44 @@ import {
   Redirect,
 } from "react-router-dom";
 import Cart from "./pages/order-books/Cart";
-import User from "./pages/User";
+import User from "./pages/user-ordered/User";
 import Auth from "./pages/Auth";
 import Admin from "./pages/admin-dashboard/Admin";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux"
+import { getUserProfile } from "./components/user/userAction";
+import {getUserOrdered} from "./pages/user-ordered/orderedAction"
+import AdminProtected from "./components/routing/AdminProtected";
+import { fetchAllBooks } from "./components/products/booksAction"
+import CategoryPage from "./components/cbook/CategoryPage";
 
 function App() {
-  const user = true;
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUserProfile())
+    dispatch(fetchAllBooks())
+    dispatch(getUserOrdered())
+  }, [])
+
   return (
     <Router>
       <Switch>
         <Route exact path="/">
           <Home />
         </Route>
-        <ProtectedRoute exact path='/user/:id' component={User}/>
+        <ProtectedRoute exact path='/user/orders' component={User}/>
         <Route exact path="/book/:id">
           <Book />
         </Route>
-        <Route exact path="/admin">
-          <Admin />
+        <Route exact path="/filter/:category">
+          <CategoryPage />
         </Route>
+        {/* <Route exact path="/admin">
+          <Admin />
+        </Route> */}
+        <AdminProtected exact path='/admin' component={Admin} />
         <Route
           exact 
           path='/register' 

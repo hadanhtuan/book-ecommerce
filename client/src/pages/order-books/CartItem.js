@@ -22,6 +22,12 @@ const CartItem = ({item, setItems}) => {
         if(cartItem.quantity > 0){
             cartItem.quantity -= 1
         }
+
+        if(cartItem.quantity == 0) {
+            cartItems = cartItems.filter((item) => (
+                item._id !== cartItem._id
+            ))
+        }
     
         localStorage.setItem('cartItems', JSON.stringify(cartItems))
 

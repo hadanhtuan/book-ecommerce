@@ -7,7 +7,7 @@
     const history = useHistory();
 
     const [itemSelected, setItemSelected] = useState(item)
-
+    
     const handleAddToCart = () => {
 
           var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -23,7 +23,6 @@
         
           localStorage.setItem('cartItems', JSON.stringify(cartItems));
           
-          console.log(cartItems)
     }
 
     const [dataBook, setDataBook] = useState("");
@@ -44,32 +43,30 @@
 
     return (
         <div className="col-xs-12 col-md-6">
-          <div onClick={handleClickBook} className="product-content product-wrap clearfix cursor-pointer">
+          <div  className="product-content product-wrap clearfix cursor-pointer">
             <div className="row">
                 <div className="col-md-5 col-sm-12 col-xs-12">
                   <div className="product-image w-4"> 
-                    <img src={item.coverImage} alt="194x228" width={194} height={228} className="img-responsive card-img-top"/>                  
+                    <img src={item.coverImage} onClick={handleClickBook} alt="194x228" width={194} height={228} className="img-responsive card-img-top"/>                  
                   </div>
                 </div>
                 <div className="col-md-7 col-sm-12 col-xs-12">
                   <div className="product-deatil">
                       <h5 className="name">
-                        <Link to="#">
+                        <Link to="#" onClick={handleClickBook} className="cursor-pointer font-weight-bold" >
                           {item.title} <span>{item.category}</span>
                         </Link>
                       </h5>
-                      <p className="price-container">
-                        <span>{item.price} đ</span>
+                      <p className="price-container" >
+                        <span onClick={handleClickBook} className="cursor-pointer" >{item.price} đ</span>
                       </p>
                       <span className="tag1"></span> 
                   </div>
-                  <div className="description">
-                    <p>{item.description}</p>
-                  </div>
+                  
                   <div className="product-info smart-form">
                     <div className="row">
-                      <div className="col-md-6 col-sm-6 col-xs-6"> 
-                        <button onClick={() => {setItemSelected(item); handleAddToCart()}} className="btn btn-success">Add to cart</button>
+                      <div className="col-md-12 col-sm-12 col-xs-12"> 
+                        <button onClick={() => {setItemSelected(item); handleAddToCart()}} className="btn btn-success">Thêm vào giỏ hàng</button>
                       </div>
                     </div>
                   </div>

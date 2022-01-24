@@ -14,7 +14,7 @@ export const postNewBook = (formData) => {
   
         resolve(data);
       } catch (error) {
-        reject(error);
+        reject(error.response.data);
       }
     });
 };
@@ -27,7 +27,20 @@ export const getAllBooks = () => {
 
       resolve(data);
     } catch (error) {
-      reject(error);
+      reject(error.response.data);
+    }
+  });
+};
+
+export const getCBooks = (category) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(`${baseUrl}/book/filter/${category}`);
+      console.log(data)
+
+      resolve(data);
+    } catch (error) {
+      reject(error.response.data);
     }
   });
 };

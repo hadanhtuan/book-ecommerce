@@ -6,9 +6,10 @@ const Slider = () => {
   return (
     <div className='banner d-flex justify-content-center align-items-center flex-column'>
         <h2>
-        Welcome to WDS STORE
+        Chào mừng đến với WebDev STORE
+
         </h2>
-        <h1  className="">Find the best products in our bookstore below:</h1>
+        <h1  className="">Nơi của những cuốn sách tuyệt vời</h1>
     </div>
   );
 };

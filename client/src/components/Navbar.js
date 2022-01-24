@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import "./css/Navbar.css";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { logout } from './auth/authAction';
 import { useDispatch, useSelector } from 'react-redux';
+import { filterSearchBooks } from "./filters/FilterAction"
+
 
 
 const Navbar = () => {
 	const dispatch = useDispatch()
 	const history = useHistory()
+	const [searchValue, setSearchValue] = useState("");
 
 	const { user } = useSelector((state) => state.user)
 
@@ -16,11 +19,16 @@ const Navbar = () => {
 		history.push("/login");
 	}
 
-	console.log(user)
+	const handleSearchChange = (e) => {
+		setSearchValue(e.target.value);
+
+		dispatch(filterSearchBooks(e.target.value));
+	};
+
 
 	return (
 		<nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-			<Link to="/" className="navbar-brand">Wds<b>Store</b>
+			<Link to="/" className="navbar-brand">WebDev<b>Store</b>
 			</Link>
 
 			<button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -28,7 +36,10 @@ const Navbar = () => {
 			</button>
 			<div id="navbarCollapse" className="collapse navbar-collapse justify-content-start">
 				<div className="navbar-nav">
-					<Link to="/" className="nav-item nav-link">Home</Link>
+					<Link to="/" className="nav-item nav-link">Trang chủ</Link>
+
+					{user.role === 'admin' && (<Link to="/admin" className="nav-link nav-item text-danger">Admin Dashboard</Link>)}
+								
 					{/* <div className="nav-item dropdown">
 						<a href="#" data-toggle="dropdown" className="nav-item nav-link dropdown-toggle">Services</a>
 						<div className="dropdown-menu">					
@@ -44,7 +55,14 @@ const Navbar = () => {
 				</div>
 				<form className="navbar-form form-inline">
 					<div className="input-group search-box">								
-						<input type="text" id="search" className="form-control" placeholder="Search here..."/>
+						<input
+							type="text"
+							id="search"
+							className="form-control"
+							placeholder="Tìm kiếm sách..."
+							onChange={handleSearchChange}
+              				value={searchValue}
+						/>
 						<div className="input-group-append">
 							<span className="input-group-text">
 								<i className="material-icons">&#xE8B6;</i>
@@ -56,29 +74,30 @@ const Navbar = () => {
 					!localStorage.getItem("accessToken") ? (
 						<div className="navbar-nav ml-auto action-buttons">
 							<div className="nav-item dropdown">
-								<Link to="/login" className="nav-link dropdown-toggle mr-4">Login</Link>
+								<Link to="/login" className="nav-link dropdown-toggle mr-4">Đăng nhập</Link>
 								
 							</div>
 							<div className="nav-item dropdown">
-								<Link to="/register" className="btn btn-primary dropdown-toggle sign-up-btn">Sign up</Link>
+								<Link to="/register" className="btn btn-primary dropdown-toggle sign-up-btn">Đăng kí</Link>
 							</div>
 						</div>
 					) : (
-
-						<div class="navbar-nav ml-auto">
-							<div class="nav-item dropdown">
-								<a data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img src="https://image.thanhnien.vn/460x306/Uploaded/2022/lxwpcqjwp/2021_03_14/av-02_ayrt.jpeg" class="avatar" alt="Avatar"/> Paula Wilson <b class="caret"></b></a>
-							<div class="dropdown-menu">
-								<Link to="#" class="dropdown-item">Danh sách đã mua</Link>
-								
-								<Link to="/cart" class="dropdown-item">Giỏ hàng của tôi</Link>
-								<div class="dropdown-divider"></div>
-								<a onClick={handleLogout} class="dropdown-item text-danger">
-									Logout
-								</a>
+							
+							<div className="navbar-nav ml-auto">
+								<div className="nav-item dropdown">
+									<a data-toggle="dropdown" className="nav-link dropdown-toggle user-action"> {`${user.email}`} <b className="caret"></b></a>
+								<div className="dropdown-menu">
+									<Link to="/user/orders" className="dropdown-item">Danh sách đã mua</Link>
+									
+									<Link to="/cart" className="dropdown-item">Giỏ hàng của tôi</Link>
+									<div className="dropdown-divider"></div>
+									<a onClick={handleLogout} className="dropdown-item text-danger">
+										Đăng xuất
+									</a>
+								</div>
+								</div>
 							</div>
-							</div>
-						</div>
+					
 					)
 				}
 

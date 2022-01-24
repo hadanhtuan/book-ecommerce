@@ -16,11 +16,18 @@ const Cart = () => {
   const [items, setItems] = useState(JSON.parse(localStorage.getItem('cartItems')))
 
   const handleOrder = async (e) => {
+      if(!localStorage.getItem('accessToken')){
+          history.push('/login')
+      }
+
+      const totalPrice = items.reduce((sum, {quantity, price}) => {
+        return sum + (quantity*price)
+      }, 0)
       const booksOrderList = items.map(item => {
         return { _id: item._id, quantity: item.quantity }
       })
 
-      dispatch(orderBooks(booksOrderList))
+      dispatch(orderBooks(booksOrderList, totalPrice))
 
      
       localStorage.setItem('cartItems', JSON.stringify([]))
@@ -48,18 +55,18 @@ const Cart = () => {
       <div className="container px-4 py-5 mx-auto w-90">
         <div className="row d-flex justify-content-center">
           <div className="col-5">
-            <h4 className="heading">Shopping Bag</h4>
+            <h4 className="heading">Giỏ Hàng</h4>
           </div>
           <div className="col-7">
             <div className="row text-right">
               <div className="col-4">
-                <h6 className="mt-2">Format</h6>
+                <h6 className="mt-2">Loại sách</h6>
               </div>
               <div className="col-4">
-                <h6 className="mt-2">Quantity</h6>
+                <h6 className="mt-2">Số lượng</h6>
               </div>
               <div className="col-4">
-                <h6 className="mt-2">Price</h6>
+                <h6 className="mt-2">Giá tiền</h6>
               </div>
             </div>
           </div>
@@ -78,12 +85,12 @@ const Cart = () => {
                   <div className="row d-flex px-3 radio">
                     {" "}
                     <img className="pay" src="https://i.imgur.com/WIAP9Ku.jpg" />
-                    <p className="my-auto">Credit Card</p>
+                    <p className="my-auto">Thẻ tín dụng</p>
                   </div>
                   <div className="row d-flex px-3 radio gray">
                     {" "}
                     <img className="pay" src="https://i.imgur.com/OdxcctP.jpg" />
-                    <p className="my-auto">Debit Card</p>
+                    <p className="my-auto">Thẻ ghi nợ</p>
                   </div>
                   <div className="row d-flex px-3 radio gray mb-3">
                     {" "}
@@ -96,7 +103,7 @@ const Cart = () => {
                     <div className="form-group col-md-6">
                       {" "}
                       <label className="form-control-label">
-                        Name on Card
+                      Tên tài khoản
                       </label>{" "}
                       <input
                         type="text"
@@ -108,7 +115,7 @@ const Cart = () => {
                     <div className="form-group col-md-6">
                       {" "}
                       <label className="form-control-label">
-                        Card Number
+                      Số tài khoản
                       </label>{" "}
                       <input
                         type="text"
@@ -122,7 +129,7 @@ const Cart = () => {
                     <div className="form-group col-md-6">
                       {" "}
                       <label className="form-control-label">
-                        Expiration Date
+                        Ngày hết hạn
                       </label>{" "}
                       <input
                         type="text"
@@ -140,7 +147,7 @@ const Cart = () => {
                 </div>
                 <div className="col-lg-4 mt-2">
                   <div className="row d-flex justify-content-between px-4">
-                    <p className="mb-1 text-left">Total</p>
+                    <p className="mb-1 text-left">Tổng cộng</p>
                     <h6 className="mb-1 text-right">{
                       items.reduce((sum, {quantity, price}) => {
                           return sum + (quantity*price)
@@ -162,14 +169,14 @@ const Cart = () => {
                     {" "}
                     <span>
                       {" "}
-                      <span id="checkout">Checkout</span>{" "}
-                      <span id="check-amt">
+                      <span id="checkout">Thanh toán</span>{" "}
+                      {/* <span id="check-amt">
                       {
                         items.reduce((sum, {quantity, price}) => {
                             return sum + (quantity*price)
                         }, 0)
                       } đ
-                      </span>{" "}
+                      </span>{" "} */}
                     </span>{" "}
                   </button>
                 </div>

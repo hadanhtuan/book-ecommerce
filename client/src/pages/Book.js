@@ -6,9 +6,39 @@ import "./css/Book.css";
 
 const Book = ({ location }) => {
   // const history = useHistory();
+  const [state, setState] = useState(1);
+
   const history = useLocation();
   const dataBook = history.state.inforBook;
   console.log(dataBook);
+
+    const handleIncrease = () => {
+        setState((state) + 1)
+    }
+    const handleDecrease = () => {
+
+        state > 0 ? setState((state) - 1) : setState(parseInt(state))
+    }
+    const handleChange = (event) => {
+        setState(event.target.value)
+    }
+
+    const handleAddToCart = () => {
+      var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        
+        
+      var cartItem = cartItems.find(cartItem => cartItem._id === dataBook._id);
+    
+      if (cartItem) {
+        cartItem.quantity += state;
+      } else {
+        cartItems.push({...dataBook, 'quantity': state})
+      }
+    
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+      console.log(cartItems)
+    }
 
   return (
     <div>
@@ -49,7 +79,7 @@ const Book = ({ location }) => {
                   </div>
                   <div>
                     {" "}
-                    <span className="product_saved">In Stock</span>{" "}
+                    <span className="product_saved">{dataBook.category}</span>{" "}
                     <span style={{ color: "black" }}>
                       <span> </span>
                     </span>
@@ -67,7 +97,7 @@ const Book = ({ location }) => {
                     <div className="col-md-6">
                       {" "}
                       <span className=" deal-text">
-                        {dataBook.category}
+                        Mô tả
                       </span>{" "}
                     </div>
                     <div className="col-md-6">
@@ -117,23 +147,28 @@ const Book = ({ location }) => {
                   <div className="col-xs-6" style={{ marginLeft: "13px" }}>
                     <div className="product_quantity">
                       {" "}
-                      <span>QTY: </span>{" "}
+                      <span>Số lượng: </span>{" "}
                       <input
                         id="quantity_input"
                         type="text"
                         pattern="[0-9]*"
                         defaultValue={1}
+                        value={state}
+                        onChange={handleChange}
                       />
                       <div className="quantity_buttons">
                         <div
                           id="quantity_inc_button"
                           className="quantity_inc quantity_control"
+                          onClick={handleIncrease}
                         >
                           <i className="fas fa-chevron-up" />
                         </div>
                         <div
                           id="quantity_dec_button"
                           className="quantity_dec quantity_control"
+                          onClick={handleDecrease}
+
                         >
                           <i className="fas fa-chevron-down" />
                         </div>
@@ -145,9 +180,9 @@ const Book = ({ location }) => {
                     <button
                       type="button"
                       className="btn btn-success shop-button"
-                      // onClick={handleClickBook}
+                      onClick={handleAddToCart}
                     >
-                      Add to Cart
+                      Thêm vào giỏ hàng
                     </button>
                   </div>
                 </div>

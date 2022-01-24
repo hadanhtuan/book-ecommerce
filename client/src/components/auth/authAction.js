@@ -3,7 +3,7 @@ import {
     userLogin,
     userRegister
 } from "../../api/authApi";
-import { getUserProfile } from "../user/userAction";
+import { deleteUserProfile, getUserProfile } from "../user/userAction";
 
 
 export const login = (userInfo, history) => async (dispatch) => {
@@ -50,5 +50,6 @@ export const login = (userInfo, history) => async (dispatch) => {
 
   export const logout = () => async (dispatch) => {
 		window.localStorage.removeItem("accessToken");
+    dispatch(deleteUserProfile())
 		dispatch(logoutSuccess({error: false, message: 'Đăng xuất thành công'}));
   };

@@ -6,11 +6,11 @@ import {
 
 import { orderBooksApi } from "../../api/orderApi";
 
-export const orderBooks = (booksOrderList) => async dispatch => {
+export const orderBooks = (booksOrderList, totalPrice) => async dispatch => {
 	try {
 		dispatch(orderPending());
 
-		const response = await orderBooksApi(booksOrderList);
+		const response = await orderBooksApi(booksOrderList, totalPrice);
 
 		if (response.error === false) {
 			dispatch(orderSuccess(response));

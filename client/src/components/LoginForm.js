@@ -50,13 +50,13 @@ const LoginForm = () => {
       <form onSubmit={handleFormSubmit}>
         <div className="row px-3">
             <label className="mb-1">
-            <h6 className="mb-0 text-sm">Email</h6>
+            <h6 className="mb-0 text-sm">Tài khoản Email</h6>
             </label>
             <input
                 className="mb-4 form-control"
                 type="text"
                 name="email"
-                placeholder="Enter a valid username "
+                placeholder="Nhập tài khoản email của bạn..."
                 required
                 onChange={(e) => handleFormChange(e)}
                 value={userInfo.email}
@@ -64,13 +64,13 @@ const LoginForm = () => {
         </div>
         <div className="row px-3">
             <label className="mb-1">
-                <h6 className="mb-0 text-sm">Password</h6>
+                <h6 className="mb-0 text-sm">Mật khẩu</h6>
             </label>
             <input
                 className="form-control"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="Nhập mật khẩu..."
                 required
                 onChange={(e) => handleFormChange(e)}
                 value={userInfo.password}
@@ -81,7 +81,7 @@ const LoginForm = () => {
                 type="submit"
                 className="btn btn-blue text-center"
             >
-            Login
+            Đăng nhập
             </button>
         </div>
       </form>
@@ -95,14 +95,14 @@ const LoginForm = () => {
           />
         </div>
         <Link to="/forgot-password" className="ml-auto mb-0 text-sm mr-2">
-          Forgot Password?
+          Quên mật khẩu?
         </Link>
       </div>
       <div className="row mb-4 px-3">
         <small className="font-weight-bold">
-          Don't have an account?{" "}
+          Chưa có tài khoản?{" "}
           <Link to="/register">
-            <p className="text-danger ">Register</p>
+            <p className="text-danger ">Đăng kí</p>
           </Link>
         </small>
       </div>
