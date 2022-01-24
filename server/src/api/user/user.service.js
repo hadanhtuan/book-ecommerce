@@ -1,26 +1,38 @@
 var Orders = require("../../models/orders");
 var User = require("../../models/user");
+var Book = require("../../models/book");
 var jwt = require("jsonwebtoken");
 
 async function getOrders(userId){
     try {
-        let orders = await Orders.find({ userId });
-
-        if(!orders){
+        let orders = await Orders.findOne({ userId });
+        console.log(userId)
+        if(!orders){    
             return {
                 error: true,
                 message: 'Không có dữ liệu'
             }
         }
 
+      //tìm _id trong book rồi trả về FE
+        let ordersList = orders.ordersList
+
+        for(let item of ordersList)
+        {
+            const book = await Book.findById(item._id);
+            item.book = book
+        }
+        
+        console.log(ordersList)
         return {
             error: false,
             message: "Lấy danh sách đã mua thành công",
-            orders
+            ordersList,
+            totalPrice: orders.totalPrice,
         }
 
     }
-    catch {
+    catch(err) {
         return {
             error: true,
             message: err.message,
