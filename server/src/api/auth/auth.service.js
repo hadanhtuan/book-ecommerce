@@ -99,7 +99,7 @@ async function forgotPassword({email})
         const resetToken = user.getResetPasswordToken();
         await user.save();
 
-        const resetUrl = `http://localhost:3000/api/auth/reset-password/${resetToken}`;
+        const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
 
         // HTML Message
         const message = `
