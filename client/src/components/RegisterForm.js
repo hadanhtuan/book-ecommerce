@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { register } from "./auth/authAction";
+import PasswordStrengthMeter from "./PasswordStrengthMeter";
 
 const RegisterForm = () => {
   const history = useHistory();
@@ -132,6 +133,7 @@ const RegisterForm = () => {
             required
           />
         </div>
+        <PasswordStrengthMeter password={userInfo.password} />
         <div className="row px-3">
           <label className="mb-1">
             <h6 className="mb-0 text-sm">Confirm Password</h6>
